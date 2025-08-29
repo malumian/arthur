@@ -6,7 +6,7 @@ imageData:
   image: ../../assets/blog/i-switched-to-lazyvim/lazyvim.png
   alt: LazyVim start screen using the TokyoNight theme, showing a minimal dotfiles setup with the file explorer and dashboard options.
   figcaption: LazyVim
-tags: ['setup', 'programming']
+tags: ['programming']
 ---
 
 In this post, I’ll explain why I switched from my own Neovim configuration to [LazyVim](https://www.lazyvim.org).
