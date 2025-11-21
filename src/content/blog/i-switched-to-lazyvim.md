@@ -142,10 +142,4 @@ I have small customizations for a few plugins, like my favorite plugin, [hapoon2
 
 By the way, these reasons are why I chose macOS as my operating system too. If I were a Linux user, knowing myself, I’d just get lost in endless configuration. That would waste a ton of time and energy, and I’d still be dissatisfied later, spending more time fixing it.
 
-In a previous post, I wrote:
-
-> If you don’t want to bother with configuration at all, LazyVim is a great ready-to-go solution, but with this approach, **you won’t get too far from your favorite VS Code**.
-
-That was snobbery typical in the Vim community, myself included, I admit.
-
 Now, I can say I no longer think about my config. I do what I love — programming. Check out my [dotfiles](https://github.com/amalumian/dotfiles).
