@@ -9,76 +9,85 @@ imageData:
 tags: ['programming']
 ---
 
-In this post, I'll share what I believe to be the most productive way to develop applications on macOS.
+_Update 11/21/2025_
+
+In this post, I'll share what I believe to be the most productive way to develop applications on macOS. Before we get started, you can find my [dotfiles](https://github.com/amalumian/dotfiles) on GitHub.
 
 ## Prerequirements
+
+![hhkb-professional-hybrid-type-s.webp](../../assets/blog/my-developer-workflow-on-macos/hhkb-professional-hybrid-type-s.webp)
 
 The only essential requirement to achieve the same level of efficiency is touch typing. In my experience, you need to reach a typing speed of around 60 words per minute to feel completely comfortable.
 
 There are many services to learn this skill, but my favorite — and the one I personally used — is [Ratatype](https://www.ratatype.com).
 
-Additionally, I highly recommend remapping `Caps Lock` to `Control`. You'll thank yourself later for doing this.
+I highly recommend doing some key remapping. I use [Karabiner-Elements](https://github.com/pqrs-org/Karabiner-Elements) for this. First, remap `Caps Lock` to `Control` or get yourself a split keyboard. It’s one of the most frequently used modifier keys, but its default position is pretty uncomfortable. You’ll thank yourself later.
 
-Before we get started, you can find my [dotfiles](https://github.com/amalumian/dotfiles) on GitHub.
+Another useful thing I’ve done with Karabiner is setting up a `Hyper Key`. A `Hyper Key` is a single key mapped to all four modifier keys at once: `Control`, `Option`, `Command`, and `Shift`. This makes it easy to assign custom shortcuts without conflicts. I use it for all of my [AeroSpace](https://github.com/nikitabobko/AeroSpace) shortcuts.
 
-![hhkb-professional-hybrid-type-s.webp](../../assets/blog/my-developer-workflow-on-macos/hhkb-professional-hybrid-type-s.webp)
-
-## Aerospace
-
-[AeroSpace](https://github.com/nikitabobko/AeroSpace) is an i3-like tiling window manager for macOS. It's the best window manager I've found for macOS. It provides all the essential window management features while offering extensive customization options.
-
-You get unlimited virtual desktops, seamless switching between them, moving applications to inactive desktops, changing focus between applications, rearranging applications on the screen, resizing windows, and more.
-
-I also recommend changing the shortcuts to Vim-style `hjkl` for better efficiency.
-
-An absolute must-have!
+## Window Manager
 
 import Video from '@/components/Video.astro';
 
 <Video src='/videos/blog/my-developer-workflow-on-macos/aerospace.mp4 ' />
 
-## Raycast
+[AeroSpace](https://github.com/nikitabobko/AeroSpace) is an i3-like tiling window manager for macOS. It's the best window manager I've found for macOS. It provides unlimited virtual workspaces and navigation between them, flexible window management, and plenty of other useful features.
 
-[Raycast](https://www.raycast.com) is the perfect replacement for the built-in Spotlight. It has enhanced capabilities, is incredibly fast, and even supports Vim-style keybindings.
+I like the idea of mapping specific workspaces to applications or particular workflows. Here’s how I’ve organized mine:
 
-![raycast.webp](../../assets/blog/my-developer-workflow-on-macos/raycast.webp)
+1. Browser (Personal)
+2. Browser (Work)
+3. Work Apps (Figma / DBeaver / Postman)
+4. Notes
+5. Messenger
+6. Music
+7. Empty
+8. Empty
+9. Mail/Calendar/Reminders
+10. Terminal
 
-## Warp
+Another convenient feature you can configure is automatically moving an app to a specific workspace when it launches. That’s how I have all my apps set up.
 
-For my terminal, I use [Warp](https://www.warp.dev). I previously used iTerm2, which is an excellent terminal, but Warp's AI-powered features won me over, so I switched to it.
+For example, I configured opening the terminal i3-style with `Hyper` + `Enter`, and once it launches, it’s automatically moved to workspace 10. If I’m on another workspace and press `Hyper` + `Enter`, instead of opening a new terminal window, AeroSpace simply focuses the already-opened one.
 
-_Update 5/17/2025: I've switched to Ghostty._
+I also recommend changing the shortcuts to Vim-style `hjkl` for better efficiency.
 
-![warp.webp](../../assets/blog/my-developer-workflow-on-macos/warp.webp)
+## Terminal
 
-## tmux
+![kitty.png](../../assets/blog/my-developer-workflow-on-macos/kitty.png)
 
-[tmux](https://github.com/tmux/tmux) is a terminal multiplexer. I assume it needs no introduction.
+I use [kitty](https://github.com/kovidgoyal/kitty), a lightweight and highly configurable terminal. Before that, I used iTerm2, but I didn’t really like configuring it through the GUI, and it felt heavier. However, iTerm2 did render colors and fonts a bit better.
 
-The only thing I'd recommend is changing the default window index from 0 to 1. Since keyboard number keys start at 1, it feels more intuitive. Also, I suggest remapping the pane navigation shortcuts to Vim-style `hjkl`.
+### tmux
 
-![tmux.webp](../../assets/blog/my-developer-workflow-on-macos/tmux.webp)
+![tmux.webp](../../assets/blog/my-developer-workflow-on-macos/tmux.png)
 
-## Neovim
+[tmux](https://github.com/tmux/tmux) is a terminal multiplexer — it probably needs no introduction. One small tweak I highly recommend is changing the default window index from 0 to 1. Since the number keys on the keyboard start at 1, it just feels more intuitive. I also suggest remapping the pane navigation shortcuts to Vim-style `hjkl`.
 
-Vim is the best text editor, and [Neovim](https://github.com/neovim/neovim) is even better. Vim provides the most efficient and comfortable way to work with text.
+What really takes productivity to the next level is pairing tmux with [tmux-sessionizer](https://github.com/ThePrimeagen/tmux-sessionizer). This simple yet powerful tool lets you quickly switch between predefined tmux sessions for different projects. At work, I often handle three repositories simultaneously, and tmux-sessionizer makes it seamless. It’s incredibly convenient and saves a lot of mental overhead.
 
-With Neovim plugins, you can tailor your editor to your exact needs without unnecessary bloat. Modern code editors often have tons of features that don't provide real practical benefits.
+### Neovim
 
-If you want to get started with Vim, start by learning the basic Vim motions and setting up your own configuration. A good first step is installing a Vim plugin in your current code editor, whether it's WebStorm or VS Code — it doesn't matter. Just get used to Vim motions. Once you get comfortable, start building your own Vim config and using the real Vim. I recommend [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) for beginners. It has documentation for almost every line, helping you understand what each plugin or setting does. Later, you can tweak it or build your own setup from scratch.
+![neovim.png](../../assets/blog/my-developer-workflow-on-macos/neovim.png)
 
-If you don't want to bother with configuration at all, [LazyVim](https://www.lazyvim.org) is a great ready-to-go solution, but with this approach, you won't get too far from your favorite VS Code.
+Vim is the best text editor, and [Neovim](https://github.com/neovim/neovim) takes it even further. It provides one of the most efficient and comfortable ways to work with text.
 
-Also, check out Vim guides from ThePrimeagen — awesome guy!
+You can either configure Neovim yourself or use a pre-configured setup like [LazyVim](https://www.lazyvim.org/). I ended up choosing LazyVim and even wrote a [post](https://www.malumian.dev/blog/i-switched-to-lazyvim/) about why.
 
-![neovim.webp](../../assets/blog/my-developer-workflow-on-macos/neovim.webp)
+If you want to get started with Neovim, begin by learning the basic Vim motions. A good first step is to install a Vim plugin in your current code editor, whether it’s WebStorm, VS Code, or something else — it doesn’t matter. Just get comfortable with the Vim motions. Once you feel confident, move on to the full Neovim experience in the terminal.
 
-## Obsidian
+### mise
 
-[Obsidian](https://obsidian.md) is a note-taking app where notes are stored as `md` files, making formatting familiar for developers.
+```toml
+[tools]
+lua = "5.1"
+node = "latest"
+rust = "latest"
+go = "latest"
+python = "latest"
+ruby = "latest"
+clojure = "latest"
+haskell = "9.4.8"
+```
 
-There are multiple ways to sync notes across devices. You can store your vault in Git using a plugin (Obsidian has a vast plugin library). However, I prefer using iCloud for seamless access from my phone. You can also use Google Drive or OneDrive.
-
-And yes, it supports Vim motions. As you can see, I use the same navigation model across all my tools, which is incredibly convenient.
-
-![obsidian.webp](../../assets/blog/my-developer-workflow-on-macos/obsidian.webp)
+For managing different versions of programming languages, I use [mise](https://github.com/jdx/mise). It lets you install all the necessary languages with a single command: `mise install`. Additionally, you can configure a specific version of a language to be used for a particular project.
