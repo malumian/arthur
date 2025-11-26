@@ -62,31 +62,31 @@
 
 /* monospace */
 @font-face {
-  font-family: 'JetBrains Mono';
+  font-family: 'Roboto Mono';
   font-display: swap;
   font-style: normal;
   font-weight: normal;
   src:
-    url('/fonts/monospace/jetbrainsmono-regular.woff2') format('woff2'),
-    url('/fonts/monospace/jetbrainsmono-regular.woff') format('woff');
+    url('/fonts/monospace/robotomono-regular.woff2') format('woff2'),
+    url('/fonts/monospace/robotomono-regular.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'JetBrains Mono';
+  font-family: 'Roboto Mono';
   font-display: swap;
   font-style: italic;
   font-weight: normal;
   src:
-    url('/fonts/monospace/jetbrainsmono-italic.woff2') format('woff2'),
-    url('/fonts/monospace/jetbrainsmono-italic.woff') format('woff');
+    url('/fonts/monospace/robotomono-italic.woff2') format('woff2'),
+    url('/fonts/monospace/robotomono-italic.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'JetBrains Mono';
+  font-family: 'Roboto Mono';
   font-display: swap;
   font-style: normal;
   font-weight: bold;
   src:
-    url('/fonts/monospace/jetbrainsmono-bold.woff2') format('woff2'),
-    url('/fonts/monospace/jetbrainsmono-bold.woff') format('woff');
+    url('/fonts/monospace/robotomono-bold.woff2') format('woff2'),
+    url('/fonts/monospace/robotomono-bold.woff') format('woff');
 }
