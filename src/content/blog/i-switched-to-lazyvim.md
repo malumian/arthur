@@ -140,6 +140,4 @@ vim.opt.spelllang = { 'en_us', 'ru' }
 
 I have small customizations for a few plugins, like my favorite plugin, [hapoon2](https://github.com/ThePrimeagen/harpoon) by ThePrimeagen. That’s it.
 
-By the way, these reasons are why I chose macOS as my operating system too. If I were a Linux user, knowing myself, I’d just get lost in endless configuration. That would waste a ton of time and energy, and I’d still be dissatisfied later, spending more time fixing it.
-
 Now, I can say I no longer think about my config. I do what I love — programming. Check out my [dotfiles](https://github.com/amalumian/dotfiles).
