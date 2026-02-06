@@ -9,7 +9,7 @@ imageData:
 tags: ['programming']
 ---
 
-_Update 11/21/2025_
+_Update 02/07/2026_
 
 In this post, I'll share what I believe to be the most productive way to develop applications on macOS. Before we get started, you can find my [dotfiles](https://github.com/amalumian/dotfiles) on GitHub.
 
@@ -31,26 +31,40 @@ import Video from '@/components/Video.astro';
 
 <Video src='/videos/blog/my-developer-workflow-on-macos/aerospace.mp4 ' />
 
-[AeroSpace](https://github.com/nikitabobko/AeroSpace) is an i3-like tiling window manager for macOS. It's the best window manager I've found for macOS. It provides unlimited virtual workspaces and navigation between them, flexible window management, and plenty of other useful features.
+[AeroSpace](https://github.com/nikitabobko/AeroSpace) is an i3-like tiling window manager for macOS. After trying several options, this one felt the most natural and flexible. It gives me unlimited virtual workspaces, predictable window behavior, and the ability to fully control navigation with the keyboard.
 
-I like the idea of mapping specific workspaces to applications or particular workflows. Here's how I've organized mine:
+Initially, my setup was fairly simple: a few numbered workspaces and manual switching. Over time, I evolved the configuration into something more semantic and automated — each workspace is now tied to a specific purpose and, in many cases, to a specific application.
 
-1. Browser (Personal)
-2. Browser (Work)
-3. Work Apps (Figma / DBeaver / Postman)
-4. Notes
-5. Messenger
-6. Music
-7. Empty
-8. Empty
-9. Mail/Calendar/Reminders
-10. Terminal
+### Workspace Philosophy
 
-Another convenient feature you can configure is automatically moving an app to a specific workspace when it launches. That's how I have all my apps set up.
+Instead of thinking in numbers, I now think in contexts. Each workspace has a name and a shortcut that reflects what I actually do there:
 
-For example, I configured opening the terminal i3-style with `Hyper` + `Enter`, and once it launches, it's automatically moved to workspace 10. If the terminal is already open and I'm on a different workspace, pressing `Hyper` + `Enter` doesn't open a new window — AeroSpace switches me to the workspace where the terminal is already running (workspace 10).
+- [B]rowser
+- [C]alendar
+- [D]atabase
+- [E]mail
+- [G]UI
+- [M]usic
+- [N]otes
+- [R]eminders
+- [S]ocial
+- [W]ork
+- [Return] (Terminal)
+- plus a few numbered utility workspaces
 
-I also recommend changing the shortcuts to Vim-style `hjkl` for better efficiency.
+### Keyboard-First Control
+
+All navigation is built around a `Hyper Key` and Vim-style movement keys:
+
+- H J K L — focus windows
+- Shift + H J K L — move windows
+- 1–4 — quick numeric workspaces
+- Letters — semantic workspaces (B for Browser, M for Music, etc.)
+- Return — open or jump to Terminal
+
+### Automation
+
+The real power comes from automation. Apps automatically move to their dedicated workspace on launch. If I trigger a shortcut for an app that is already running, AeroSpace switches me to its workspace instead of opening duplicates.
 
 ## Terminal
 
