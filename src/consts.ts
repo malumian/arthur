@@ -67,14 +67,9 @@ export const SOCIALS = [
     icon: 'linkedin',
   },
   {
-    name: 'Telegram',
-    link: 'https://t.me/malumian',
-    icon: 'telegram',
-  },
-  {
-    name: 'Stack Overflow',
-    link: 'https://stackoverflow.com/users/19778080/amalumian',
-    icon: 'stack-overflow',
+    name: 'Facebook',
+    link: 'https://www.facebook.com/amalumian',
+    icon: 'facebook',
   },
   {
     name: 'Twitter',
@@ -82,14 +77,9 @@ export const SOCIALS = [
     icon: 'twitter',
   },
   {
-    name: 'Facebook',
-    link: 'https://www.facebook.com/amalumian',
-    icon: 'facebook',
-  },
-  {
-    name: 'Reddit',
-    link: 'https://www.reddit.com/user/malumiandev',
-    icon: 'reddit',
+    name: 'Telegram',
+    link: 'https://t.me/amalumian',
+    icon: 'telegram',
   },
   {
     name: 'YouTube',
