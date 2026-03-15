@@ -43,7 +43,7 @@ The moment I decided that law was not for me, I started to remember what I was i
 
 In fact, I had been interested in computers and everything related to them since I was a kid. I spent a lot of time at the computer, studied different programs, even tried to program, but I thought that you have to be a math genius to program, so I gave up.
 
-I did a lot of thinking and decided to give programming a second chance. I chose to learn Frontend Development.
+I did a lot of thinking and decided to give programming a second chance. I chose to learn frontend development.
 
 ### Realization
 
