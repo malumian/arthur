@@ -9,7 +9,7 @@ imageData:
 tags: ['life']
 ---
 
-Hello Internet, this is the first post on my new website. Honestly, this is my first post in my whole life. I think it is necessary to introduce myself first. In short, my name is Arthur Malumian, and I am a programmer. On this [page](/about/) you can find more information about me.
+Hello Internet, this is the first post on my new website. Honestly, this is my first post in my whole life. I think it is necessary to introduce myself first. In short, my name is Arthur Malumian, and I am a programmer. On this [page](/) you can find more information about me.
 
 Lately, I've been thinking that it would be a good idea to do some writing, but the question is: where?
 
