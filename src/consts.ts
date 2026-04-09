@@ -16,11 +16,6 @@ export const PAGES_METADATA = {
     description:
       "This page provides an overview of Arthur Malumian's tags used in the blog",
   },
-  projects: {
-    title: 'Projects',
-    description:
-      "This page provides an overview of Arthur Malumian's projects.",
-  },
   setup: {
     title: 'Setup',
     description:
@@ -44,10 +39,6 @@ export const ROUTES = [
   {
     name: 'Blog',
     link: '/blog/',
-  },
-  {
-    name: 'Projects',
-    link: '/projects/',
   },
   {
     name: 'Setup',
