@@ -183,221 +183,242 @@ const {
 </style>
 
 <script>
-  const dropdown = document.querySelector('.dropdown');
-  const selectedItemButton = document.querySelector('.selected-item-button');
-  const selectContainer = document.querySelector('.select');
+  document
+    .querySelectorAll<HTMLElement>('.select')
+    .forEach((selectContainer) => {
+      const dropdown = selectContainer.querySelector<HTMLElement>('.dropdown');
+      const selectedItemButton =
+        selectContainer.querySelector<HTMLButtonElement>(
+          '.selected-item-button',
+        );
 
-  if (dropdown && selectedItemButton && selectContainer) {
-    const selectedItemButtonIcon = selectedItemButton.querySelector('svg');
-    const options = dropdown.querySelectorAll('[role="option"]');
-    let focusedIndex = -1;
-
-    const updateAriaExpanded = (expanded: boolean) => {
-      selectContainer.setAttribute('aria-expanded', expanded.toString());
-    };
-
-    const updateIconRotation = (isOpen: boolean) => {
-      if (selectedItemButtonIcon) {
-        selectedItemButtonIcon.style.transform = isOpen
-          ? 'rotate(180deg)'
-          : 'rotate(0deg)';
+      if (!dropdown || !selectedItemButton) {
+        return;
       }
-    };
 
-    const disableAllTabIndexes = () => {
-      options.forEach((option) => {
-        const button = option.querySelector('button');
-        if (button) button.tabIndex = -1;
-      });
-    };
+      const selectedItemButtonIcon = selectedItemButton.querySelector('svg');
+      const options = Array.from(
+        dropdown.querySelectorAll<HTMLElement>('[role="option"]'),
+      );
+      let focusedIndex = -1;
 
-    const closeDropdown = () => {
-      dropdown.classList.remove('open');
-      updateAriaExpanded(false);
-      updateIconRotation(false);
-      focusedIndex = -1;
-      options.forEach((option) => {
-        option.setAttribute('aria-selected', 'false');
-      });
-    };
+      const isDropdownOpen = () => dropdown.classList.contains('open');
 
-    const openDropdown = () => {
-      dropdown.classList.add('open');
-      updateAriaExpanded(true);
-      updateIconRotation(true);
-      disableAllTabIndexes();
+      const getOptionButton = (option: HTMLElement) =>
+        option.querySelector<HTMLButtonElement>('button');
 
-      if (options.length > 0) {
-        focusedIndex = 0;
-        options[0].setAttribute('aria-selected', 'true');
-        const firstButton = options[0].querySelector('button');
-        if (firstButton) {
-          firstButton.focus();
+      const updateAriaExpanded = (expanded: boolean) => {
+        selectContainer.setAttribute('aria-expanded', expanded.toString());
+      };
+
+      const updateIconRotation = (isOpen: boolean) => {
+        if (selectedItemButtonIcon) {
+          selectedItemButtonIcon.style.transform = isOpen
+            ? 'rotate(180deg)'
+            : 'rotate(0deg)';
         }
-      }
-    };
+      };
 
-    const focusOption = (index: number) => {
-      if (index < 0 || index >= options.length) return;
+      const clearOptionState = () => {
+        options.forEach((option) => {
+          option.setAttribute('aria-selected', 'false');
+          const button = getOptionButton(option);
+          if (button) {
+            button.tabIndex = -1;
+          }
+        });
+      };
 
-      disableAllTabIndexes();
+      const focusOption = (index: number) => {
+        if (index < 0 || index >= options.length) {
+          return;
+        }
 
-      if (focusedIndex >= 0 && focusedIndex < options.length) {
-        options[focusedIndex].setAttribute('aria-selected', 'false');
-      }
+        clearOptionState();
+        focusedIndex = index;
 
-      focusedIndex = index;
-      options[index].setAttribute('aria-selected', 'true');
-      const newButton = options[index].querySelector('button');
-      if (newButton) {
-        newButton.focus();
-      }
-    };
+        const option = options[index];
+        option.setAttribute('aria-selected', 'true');
 
-    selectedItemButton.addEventListener('click', () => {
-      if (dropdown.classList.contains('open')) {
-        closeDropdown();
-      } else {
+        const button = getOptionButton(option);
+
+        if (button) {
+          button.tabIndex = 0;
+          button.focus();
+        }
+      };
+
+      const openDropdown = (index = 0) => {
         dropdown.classList.add('open');
         updateAriaExpanded(true);
         updateIconRotation(true);
-        disableAllTabIndexes();
-      }
-    });
 
-    selectedItemButton.addEventListener('keydown', (event: Event) => {
-      if (!('key' in event)) return;
-      switch (event.key) {
-        case 'Enter':
-        case ' ':
-          event.preventDefault();
-          if (dropdown.classList.contains('open')) {
-            closeDropdown();
-          } else {
-            openDropdown();
+        if (options.length === 0) {
+          return;
+        }
+
+        focusOption(index);
+      };
+
+      const closeDropdown = () => {
+        dropdown.classList.remove('open');
+        updateAriaExpanded(false);
+        updateIconRotation(false);
+        clearOptionState();
+        focusedIndex = -1;
+      };
+
+      selectedItemButton.addEventListener('click', () => {
+        if (isDropdownOpen()) {
+          closeDropdown();
+          return;
+        }
+
+        openDropdown();
+      });
+
+      selectedItemButton.addEventListener('keydown', (event: KeyboardEvent) => {
+        switch (event.key) {
+          case 'Enter':
+          case ' ': {
+            event.preventDefault();
+
+            if (isDropdownOpen()) {
+              closeDropdown();
+            } else {
+              openDropdown();
+            }
+
+            break;
           }
-          break;
-        case 'ArrowDown':
-          event.preventDefault();
-          if (!dropdown.classList.contains('open')) {
-            openDropdown();
-          } else {
+          case 'ArrowDown': {
+            event.preventDefault();
+
+            if (!isDropdownOpen()) {
+              openDropdown();
+            } else {
+              const nextIndex =
+                focusedIndex < options.length - 1 ? focusedIndex + 1 : 0;
+              focusOption(nextIndex);
+            }
+
+            break;
+          }
+          case 'ArrowUp': {
+            event.preventDefault();
+
+            if (!isDropdownOpen()) {
+              openDropdown(options.length - 1);
+            } else {
+              const prevIndex =
+                focusedIndex > 0 ? focusedIndex - 1 : options.length - 1;
+              focusOption(prevIndex);
+            }
+
+            break;
+          }
+          case 'Escape': {
+            if (isDropdownOpen()) {
+              closeDropdown();
+              selectedItemButton.focus();
+            }
+
+            break;
+          }
+        }
+      });
+
+      dropdown.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (!isDropdownOpen()) return;
+
+        switch (event.key) {
+          case 'ArrowDown': {
+            event.preventDefault();
             const nextIndex =
               focusedIndex < options.length - 1 ? focusedIndex + 1 : 0;
             focusOption(nextIndex);
+            break;
           }
-          break;
-        case 'ArrowUp':
-          event.preventDefault();
-          if (!dropdown.classList.contains('open')) {
-            openDropdown();
-          } else {
+          case 'ArrowUp': {
+            event.preventDefault();
             const prevIndex =
               focusedIndex > 0 ? focusedIndex - 1 : options.length - 1;
             focusOption(prevIndex);
+            break;
           }
-          break;
-        case 'Escape':
-          if (dropdown.classList.contains('open')) {
+          case 'Enter':
+          case ' ': {
+            event.preventDefault();
+
+            if (focusedIndex >= 0 && focusedIndex < options.length) {
+              getOptionButton(options[focusedIndex])?.click();
+            }
+
+            break;
+          }
+          case 'Escape': {
             closeDropdown();
-            (selectedItemButton as HTMLElement).focus();
+            selectedItemButton.focus();
+            break;
           }
-          break;
-      }
-    });
-
-    dropdown.addEventListener('keydown', (event: Event) => {
-      if (!dropdown.classList.contains('open')) return;
-      if (!('key' in event)) return;
-
-      switch (event.key) {
-        case 'ArrowDown': {
-          event.preventDefault();
-          const nextIndex =
-            focusedIndex < options.length - 1 ? focusedIndex + 1 : 0;
-          focusOption(nextIndex);
-          break;
         }
-        case 'ArrowUp': {
-          event.preventDefault();
-          const prevIndex =
-            focusedIndex > 0 ? focusedIndex - 1 : options.length - 1;
-          focusOption(prevIndex);
-          break;
+      });
+
+      dropdown.addEventListener('focusin', (event) => {
+        const target = event.target as HTMLElement;
+
+        if (target.tagName !== 'BUTTON') {
+          return;
         }
-        case 'Enter':
-        case ' ':
-          event.preventDefault();
-          if (focusedIndex >= 0 && focusedIndex < options.length) {
-            const button = options[focusedIndex].querySelector('button');
-            if (button) button.click();
-          }
-          break;
-        case 'Escape':
+
+        const option = target.closest<HTMLElement>('[role="option"]');
+
+        if (!option) {
+          return;
+        }
+
+        const index = options.indexOf(option);
+
+        if (index !== -1) {
+          clearOptionState();
+          focusedIndex = index;
+          option.setAttribute('aria-selected', 'true');
+          target.tabIndex = 0;
+        }
+      });
+
+      selectContainer.addEventListener('focusout', (event) => {
+        const relatedTarget = event.relatedTarget;
+
+        if (
+          relatedTarget &&
+          !selectContainer.contains(relatedTarget as HTMLElement)
+        ) {
           closeDropdown();
-          (selectedItemButton as HTMLElement).focus();
-          break;
-      }
-    });
+        }
+      });
 
-    document.addEventListener('click', (event) => {
-      const target = event.target as HTMLElement;
-      if (!selectedItemButton.contains(target) && !dropdown.contains(target)) {
-        closeDropdown();
-      }
-    });
+      document.addEventListener('click', (event) => {
+        const target = event.target as Node | null;
 
-    dropdown.addEventListener('focusin', (event: Event) => {
-      const target = event.target as HTMLElement;
-      if (target.tagName === 'BUTTON') {
-        const option = target.closest('[role="option"]');
-        if (option) {
-          const index = Array.from(options).indexOf(option);
-          if (index !== -1) {
-            focusedIndex = index;
-            options.forEach((opt, i) => {
-              opt.setAttribute('aria-selected', i === index ? 'true' : 'false');
-            });
+        if (target && !selectContainer.contains(target)) {
+          closeDropdown();
+        }
+      });
+
+      dropdown.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+
+        if (
+          target.tagName === 'BUTTON' &&
+          target.classList.contains('dropdown-item-button')
+        ) {
+          const url = target.getAttribute('data-url');
+
+          if (url) {
+            window.location.href = url;
           }
         }
-      }
+      });
     });
-
-    selectedItemButton.addEventListener('focusout', (event: Event) => {
-      if (!('relatedTarget' in event)) return;
-      const relatedTarget = event.relatedTarget;
-
-      if (
-        relatedTarget &&
-        !selectContainer.contains(relatedTarget as HTMLElement)
-      ) {
-        closeDropdown();
-      }
-    });
-
-    dropdown.addEventListener('focusout', (event: Event) => {
-      if (!('relatedTarget' in event)) return;
-      const relatedTarget = event.relatedTarget;
-
-      if (
-        relatedTarget &&
-        !selectContainer.contains(relatedTarget as HTMLElement)
-      ) {
-        closeDropdown();
-      }
-    });
-
-    dropdown.addEventListener('click', (event: Event) => {
-      const target = event.target as HTMLElement;
-      if (
-        target.tagName === 'BUTTON' &&
-        target.classList.contains('dropdown-item-button')
-      ) {
-        const url = target.getAttribute('data-url');
-        if (url) {
-          window.location.href = url;
-        }
-      }
-    });
-  }
 </script>
