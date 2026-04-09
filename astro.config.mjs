@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 import {remarkReadingTime} from './plugins/remark-reading-time.mjs';
 
 export default defineConfig({
-  site: 'https://www.malumian.dev',
+  site: 'https://arthur.malumian.dev',
   redirects: {
     '/about/': '/',
   },
