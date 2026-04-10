@@ -25,11 +25,16 @@ const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())].sort(
   (a, b) => a.localeCompare(b),
 );
 const postsToRender = filteredPosts ?? allPosts;
-const selectItems = tags.map((tag) => ({
-  label: tag,
-  url: `/blog/tags/${tag}/`,
-}));
-const defaultItem = {label: '—', url: '/blog/'};
+const defaultOption = {label: '—', value: '/blog/'};
+const tagOptions = [
+  defaultOption,
+  ...tags.map((tag) => ({
+    label: tag,
+    value: `/blog/tags/${tag}/`,
+  })),
+];
+const selectedOption =
+  tagOptions.find((tag) => tag.label === selectedTag) ?? defaultOption;
 ---
 
 <Default title={title} description={description} image={image}>
@@ -41,10 +46,10 @@ const defaultItem = {label: '—', url: '/blog/'};
         {allPosts.length === 1 ? 'post' : 'posts'}
       </div>
       <Select
-        items={selectItems}
-        selectedItem={selectedTag}
-        defaultItem={defaultItem}
+        id='tag-select'
         label='Filter by tag'
+        options={tagOptions}
+        selectedOption={selectedOption}
       />
     </div>
     <div class='posts-list'>

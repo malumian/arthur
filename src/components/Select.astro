@@ -1,424 +1,74 @@
 ---
-import Icon from './Icon.astro';
-
 interface Props {
-  items: {
+  id: string;
+  label: string;
+  options: {
     label: string;
-    url: string;
+    value: string;
   }[];
-  selectedItem?: string;
-  defaultItem: {
+  selectedOption: {
     label: string;
-    url: string;
+    value: string;
   };
-  id?: string;
-  label?: string;
 }
-const {
-  selectedItem,
-  items,
-  defaultItem,
-  id = 'custom-select',
-  label,
-} = Astro.props;
+
+const {id, label, options, selectedOption} = Astro.props;
 ---
 
-{
-  label && (
-    <label id={`${id}-main-label`} for={`${id}-button`} class='sr-only'>
-      {label}
-    </label>
-  )
-}
-<div
-  class='select'
-  role='combobox'
-  aria-expanded='false'
-  aria-haspopup='listbox'
-  aria-controls={`${id}-listbox`}
-  aria-labelledby={`${id}-main-label`}
->
-  <div class='selected-item'>
-    <button
-      class='selected-item-button'
-      type='button'
-      aria-labelledby={`${id}-label`}
-      aria-describedby={`${id}-description`}
-      id={`${id}-button`}
-    >
-      <span id={`${id}-label`}>{selectedItem ?? defaultItem.label}</span>
-      <Icon name='caret-down' />
-    </button>
-  </div>
-  <div
-    class='dropdown'
-    id={`${id}-listbox`}
-    role='listbox'
-    aria-label='Select an option'
-  >
-    <ul class='dropdown-list'>
-      {
-        selectedItem && (
-          <li class='dropdown-item' role='option' aria-selected='false'>
-            <button
-              class='dropdown-item-button'
-              data-url={defaultItem.url}
-              tabindex='-1'
-            >
-              {defaultItem.label}
-            </button>
-          </li>
-        )
-      }
-      {
-        items
-          .filter((item) => item.label !== selectedItem)
-          .map((item) => (
-            <li class='dropdown-item' role='option' aria-selected='false'>
-              <button
-                class='dropdown-item-button'
-                data-url={item.url}
-                tabindex='-1'
-              >
-                {item.label}
-              </button>
-            </li>
-          ))
-      }
-    </ul>
-  </div>
-  <div id={`${id}-description`} class='sr-only'>
-    Use arrow keys to navigate options, Enter to select, Escape to close
-  </div>
+<div class='select-wrapper'>
+  <label for={id} class='sr-only'>
+    {label}
+  </label>
+  <select class='select' id={id}>
+    {
+      options.map((item) => (
+        <option
+          value={item.value}
+          selected={item.value === selectedOption?.value}
+        >
+          {item.label}
+        </option>
+      ))
+    }
+  </select>
 </div>
 
 <style>
+  .select-wrapper {
+    width: 12rem;
+  }
+
   .select {
-    position: relative;
-    width: 14rem;
-  }
-
-  .selected-item {
-    border: 0.1rem solid var(--color-text);
-  }
-
-  .selected-item-button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     width: 100%;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: space-between;
-    background: transparent;
-    border: none;
     padding: 0.5rem 1rem;
+    border: var(--border);
+    border-radius: 0;
+    background: var(--color-background);
     cursor: pointer;
     font-family: var(--font-family-sans-serif-condensed);
     font-size: var(--font-size-medium);
     color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-
-  .selected-item-button:hover {
+  .select:hover {
     background-color: var(--color-gray-light);
   }
-
-  .selected-item-button:active {
-    background-color: var(--color-gray);
-  }
-
-  .selected-item-button:focus-visible {
-    outline-width: 0.1rem;
-  }
-
-  .dropdown {
-    display: none;
-    width: 100%;
-    border: 0.1rem solid var(--color-text);
-    border-top: none;
-    position: absolute;
-    z-index: 1;
-    background-color: var(--color-background);
-  }
-
-  .dropdown.open {
-    display: block;
-  }
-
-  .dropdown-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .dropdown-item {
-  }
-
-  .dropdown-item-button {
-    display: block;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    background: transparent;
-    border: none;
-    font-family: var(--font-family-sans-serif-condensed);
-    font-size: var(--font-size-medium);
-    color: var(--color-text);
-    cursor: pointer;
-    text-align: left;
-  }
-
-  .dropdown-item-button:hover,
-  .dropdown-item-button:focus {
-    color: var(--color-text);
-    background-color: var(--color-gray-light);
+  .select:focus-within {
     outline: none;
-  }
-
-  .dropdown-item-button:active {
-    background-color: var(--color-gray) !important;
-  }
-
-  .dropdown-item[aria-selected='true'] .dropdown-item-button {
-    background-color: var(--color-gray-light);
+    border-color: var(--color-primary-light);
   }
 </style>
 
 <script>
-  document
-    .querySelectorAll<HTMLElement>('.select')
-    .forEach((selectContainer) => {
-      const dropdown = selectContainer.querySelector<HTMLElement>('.dropdown');
-      const selectedItemButton =
-        selectContainer.querySelector<HTMLButtonElement>(
-          '.selected-item-button',
-        );
-
-      if (!dropdown || !selectedItemButton) {
-        return;
+  document.querySelectorAll<HTMLSelectElement>('.select').forEach((select) => {
+    select.addEventListener('change', () => {
+      if (select.value) {
+        window.location.href = select.value;
       }
-
-      const selectedItemButtonIcon = selectedItemButton.querySelector('svg');
-      const options = Array.from(
-        dropdown.querySelectorAll<HTMLElement>('[role="option"]'),
-      );
-      let focusedIndex = -1;
-
-      const isDropdownOpen = () => dropdown.classList.contains('open');
-
-      const getOptionButton = (option: HTMLElement) =>
-        option.querySelector<HTMLButtonElement>('button');
-
-      const updateAriaExpanded = (expanded: boolean) => {
-        selectContainer.setAttribute('aria-expanded', expanded.toString());
-      };
-
-      const updateIconRotation = (isOpen: boolean) => {
-        if (selectedItemButtonIcon) {
-          selectedItemButtonIcon.style.transform = isOpen
-            ? 'rotate(180deg)'
-            : 'rotate(0deg)';
-        }
-      };
-
-      const clearOptionState = () => {
-        options.forEach((option) => {
-          option.setAttribute('aria-selected', 'false');
-          const button = getOptionButton(option);
-          if (button) {
-            button.tabIndex = -1;
-          }
-        });
-      };
-
-      const focusOption = (index: number) => {
-        if (index < 0 || index >= options.length) {
-          return;
-        }
-
-        clearOptionState();
-        focusedIndex = index;
-
-        const option = options[index];
-        option.setAttribute('aria-selected', 'true');
-
-        const button = getOptionButton(option);
-
-        if (button) {
-          button.tabIndex = 0;
-          button.focus();
-        }
-      };
-
-      const openDropdown = (index = 0) => {
-        dropdown.classList.add('open');
-        updateAriaExpanded(true);
-        updateIconRotation(true);
-
-        if (options.length === 0) {
-          return;
-        }
-
-        focusOption(index);
-      };
-
-      const closeDropdown = () => {
-        dropdown.classList.remove('open');
-        updateAriaExpanded(false);
-        updateIconRotation(false);
-        clearOptionState();
-        focusedIndex = -1;
-      };
-
-      selectedItemButton.addEventListener('click', () => {
-        if (isDropdownOpen()) {
-          closeDropdown();
-          return;
-        }
-
-        openDropdown();
-      });
-
-      selectedItemButton.addEventListener('keydown', (event: KeyboardEvent) => {
-        switch (event.key) {
-          case 'Enter':
-          case ' ': {
-            event.preventDefault();
-
-            if (isDropdownOpen()) {
-              closeDropdown();
-            } else {
-              openDropdown();
-            }
-
-            break;
-          }
-          case 'ArrowDown': {
-            event.preventDefault();
-
-            if (!isDropdownOpen()) {
-              openDropdown();
-            } else {
-              const nextIndex =
-                focusedIndex < options.length - 1 ? focusedIndex + 1 : 0;
-              focusOption(nextIndex);
-            }
-
-            break;
-          }
-          case 'ArrowUp': {
-            event.preventDefault();
-
-            if (!isDropdownOpen()) {
-              openDropdown(options.length - 1);
-            } else {
-              const prevIndex =
-                focusedIndex > 0 ? focusedIndex - 1 : options.length - 1;
-              focusOption(prevIndex);
-            }
-
-            break;
-          }
-          case 'Escape': {
-            if (isDropdownOpen()) {
-              closeDropdown();
-              selectedItemButton.focus();
-            }
-
-            break;
-          }
-        }
-      });
-
-      dropdown.addEventListener('keydown', (event: KeyboardEvent) => {
-        if (!isDropdownOpen()) return;
-
-        switch (event.key) {
-          case 'ArrowDown': {
-            event.preventDefault();
-            const nextIndex =
-              focusedIndex < options.length - 1 ? focusedIndex + 1 : 0;
-            focusOption(nextIndex);
-            break;
-          }
-          case 'ArrowUp': {
-            event.preventDefault();
-            const prevIndex =
-              focusedIndex > 0 ? focusedIndex - 1 : options.length - 1;
-            focusOption(prevIndex);
-            break;
-          }
-          case 'Enter':
-          case ' ': {
-            event.preventDefault();
-
-            if (focusedIndex >= 0 && focusedIndex < options.length) {
-              getOptionButton(options[focusedIndex])?.click();
-            }
-
-            break;
-          }
-          case 'Escape': {
-            closeDropdown();
-            selectedItemButton.focus();
-            break;
-          }
-        }
-      });
-
-      dropdown.addEventListener('focusin', (event) => {
-        const target = event.target as HTMLElement;
-
-        if (target.tagName !== 'BUTTON') {
-          return;
-        }
-
-        const option = target.closest<HTMLElement>('[role="option"]');
-
-        if (!option) {
-          return;
-        }
-
-        const index = options.indexOf(option);
-
-        if (index !== -1) {
-          clearOptionState();
-          focusedIndex = index;
-          option.setAttribute('aria-selected', 'true');
-          target.tabIndex = 0;
-        }
-      });
-
-      selectContainer.addEventListener('focusout', (event) => {
-        const relatedTarget = event.relatedTarget;
-
-        if (
-          relatedTarget &&
-          !selectContainer.contains(relatedTarget as HTMLElement)
-        ) {
-          closeDropdown();
-        }
-      });
-
-      document.addEventListener('click', (event) => {
-        const target = event.target as Node | null;
-
-        if (target && !selectContainer.contains(target)) {
-          closeDropdown();
-        }
-      });
-
-      dropdown.addEventListener('click', (event) => {
-        const target = event.target as HTMLElement;
-
-        if (
-          target.tagName === 'BUTTON' &&
-          target.classList.contains('dropdown-item-button')
-        ) {
-          const url = target.getAttribute('data-url');
-
-          if (url) {
-            window.location.href = url;
-          }
-        }
-      });
     });
+  });
 </script>
