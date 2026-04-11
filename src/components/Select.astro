@@ -35,7 +35,19 @@ const {id, label, options, selectedOption} = Astro.props;
 
 <style>
   .select-wrapper {
+    position: relative;
     width: 12rem;
+  }
+  .select-wrapper::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 0.8rem;
+    color: var(--color-text);
+    line-height: 1;
   }
 
   .select {
@@ -43,7 +55,7 @@ const {id, label, options, selectedOption} = Astro.props;
     -webkit-appearance: none;
     -moz-appearance: none;
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem 0.5rem 1rem;
     border: var(--border);
     border-radius: 0;
     background: var(--color-background);
