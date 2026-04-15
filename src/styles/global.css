@@ -9,8 +9,8 @@
 }
 
 *:focus-visible {
-  outline: 0.2rem solid var(--color-primary-light);
-  outline-offset: 0;
+  outline: 0.2rem solid var(--color-primary);
+  outline-offset: 0.4rem;
 }
 
 * {
@@ -19,6 +19,7 @@
 
 html {
   font-size: 62.5%;
+  background-color: var(--color-background-base);
 }
 
 body {
@@ -29,13 +30,13 @@ body {
   font-family: var(--font-family-sans-serif);
   line-height: var(--line-height-default);
   font-size: var(--font-size-default);
-  color: var(--color-text);
+  color: var(--color-text-base);
   text-align: left;
   word-wrap: break-word;
   overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-background);
+  background-color: var(--color-background-base);
 }
 
 main {
@@ -90,13 +91,13 @@ a:hover {
   color: var(--color-primary);
 }
 a:active {
-  color: var(--color-primary-dark);
+  color: var(--color-primary-active);
 }
 a svg:hover {
   fill: var(--color-primary);
 }
 a svg:active {
-  fill: var(--color-primary-dark);
+  fill: var(--color-primary-active);
 }
 sup a {
   text-decoration: none;
@@ -148,7 +149,7 @@ video {
 }
 
 code {
-  background-color: var(--color-gray-light);
+  background-color: var(--color-background-secondary);
   font-family: var(--font-family-monospace);
 }
 pre {
@@ -168,7 +169,7 @@ blockquote {
 
 hr {
   border: none;
-  border-top: 1px solid rgb(var(--gray-light));
+  border-top: 1px solid var(--color-background-secondary);
 }
 
 @media (max-width: 760px) {

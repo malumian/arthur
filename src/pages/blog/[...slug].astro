@@ -100,7 +100,7 @@ const sortedTags = tags.sort((a, b) => a.localeCompare(b));
     display: flex;
     flex-wrap: wrap;
     font-family: var(--font-family-sans-serif-condensed);
-    color: var(--color-gray-dark);
+    color: var(--color-text-secondary);
     list-style: none;
     padding: 0;
     margin: 0;
@@ -130,7 +130,7 @@ const sortedTags = tags.sort((a, b) => a.localeCompare(b));
     font-family: var(--font-family-sans-serif-condensed);
     font-size: var(--font-size-medium);
     font-weight: bold;
-    color: var(--color-background);
+    color: var(--color-background-base);
     list-style: none;
     padding: 0;
     margin: 0;
@@ -147,10 +147,7 @@ const sortedTags = tags.sort((a, b) => a.localeCompare(b));
     text-decoration: none;
     display: block;
     padding: 0.1rem 0.4rem;
-  }
-
-  .tag a:hover {
-    color: var(--color-background);
+    color: #fff;
   }
 
   .figure {
@@ -169,8 +166,8 @@ const sortedTags = tags.sort((a, b) => a.localeCompare(b));
     margin: 1rem;
     font-family: var(--font-family-sans-serif-condensed);
     font-size: var(--font-size-medium);
-    color: var(--color-background);
-    background-color: rgba(var(--color-black-rgba), 0.5);
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .posts-nav {

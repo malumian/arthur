@@ -46,7 +46,7 @@ const {id, label, options, selectedOption} = Astro.props;
     transform: translateY(-50%);
     pointer-events: none;
     font-size: 0.8rem;
-    color: var(--color-text);
+    color: var(--color-text-base);
     line-height: 1;
   }
 
@@ -58,23 +58,23 @@ const {id, label, options, selectedOption} = Astro.props;
     width: 100%;
     height: 3rem;
     padding: 0 2rem 0 1rem;
-    border: var(--border);
+    border: var(--border-small);
     border-radius: 0;
-    background: var(--color-background);
+    background: var(--color-background-base);
     cursor: pointer;
     font-family: var(--font-family-sans-serif-condensed);
     font-size: var(--font-size-medium);
     line-height: 1.2;
-    color: var(--color-text);
+    color: var(--color-text-base);
     overflow: hidden;
     text-overflow: ellipsis;
   }
   .select:hover {
-    background-color: var(--color-gray-light);
+    background-color: var(--color-background-secondary);
   }
   .select:focus-within {
     outline: none;
-    border-color: var(--color-primary-light);
+    border-color: var(--color-primary);
   }
 </style>
 

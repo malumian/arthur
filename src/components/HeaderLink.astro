@@ -20,9 +20,19 @@ const isActive =
 </a>
 <style>
   a {
+    color: var(--color-text-base);
     text-decoration: none;
+  }
+  a:hover {
+    color: var(--color-primary);
+  }
+  a:active {
+    color: var(--color-primary-active);
   }
   a.active {
     color: var(--color-primary);
+  }
+  a.active:active {
+    color: var(--color-primary-active);
   }
 </style>

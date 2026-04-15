@@ -1,18 +1,17 @@
 ---
 type Props = {
-  name: string;
+  iconName: string;
   width?: string;
   height?: string;
   block?: boolean;
 };
 
-const {name, width = '2rem', height = '2rem', block = false} = Astro.props;
+const {iconName, width = '2rem', height = '2rem', block = false} = Astro.props;
 ---
 
 <svg
   style={{width, height, display: block ? 'block' : 'inline'}}
   aria-hidden='true'
-  class={block ? 'block' : ''}
 >
-  <use xlink:href={`#${name}`}></use>
+  <use xlink:href={`#${iconName}`}></use>
 </svg>

@@ -45,6 +45,7 @@ const formattedTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 
 <meta charset='utf-8' />
 <meta name='viewport' content='width=device-width,initial-scale=1' />
+<meta name='color-scheme' content='light dark' />
 <link rel='sitemap' href='/sitemap-index.xml' />
 <link
   rel='alternate'
@@ -54,7 +55,30 @@ const formattedTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 />
 <meta name='generator' content={Astro.generator} />
 
-<meta name='theme-color' content='#9b111e' />
+<meta
+  name='theme-color'
+  content='#ffffff'
+  media='(prefers-color-scheme: light)'
+/>
+<meta
+  name='theme-color'
+  content='#000000'
+  media='(prefers-color-scheme: dark)'
+/>
+
+<style is:inline>
+  :root {
+    color-scheme: light;
+    background-color: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      background-color: #000000;
+    }
+  }
+</style>
 
 <link rel='icon' href='/favicons/favicon.ico' sizes='32x32' />
 <link rel='icon' href='/favicons/icon.svg' type='image/svg+xml' />

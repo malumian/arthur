@@ -16,7 +16,7 @@ import {SOCIALS} from '@/consts';
               title={link.name}
               aria-label={link.name}
             >
-              <Icon name={link.icon} width='3rem' height='3rem' block />
+              <Icon iconName={link.icon} width='3rem' height='3rem' block />
             </a>
           </li>
         ))
@@ -34,8 +34,7 @@ import {SOCIALS} from '@/consts';
 <style>
   .footer {
     text-align: center;
-    color: var(--color-background);
-    background-color: var(--color-text);
+    border-top: var(--border-medium);
     font-size: var(--font-size-medium);
     font-family: var(--font-family-sans-serif-condensed);
   }
