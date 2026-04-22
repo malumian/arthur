@@ -20,12 +20,7 @@ const {
   title,
   description,
   posts,
-  page: {
-    currentPage,
-    lastPage,
-    total,
-    url: {first, last},
-  },
+  page: {currentPage, lastPage, total},
 } = Astro.props;
 
 const range = 2;
@@ -66,13 +61,13 @@ const getPageUrl = (pageNumber: number) => {
     <nav aria-label='Pagination' class='pagination'>
       <div>
         {
-          first ? (
-            <a class='pagination-link' href={getPageUrl(1)}>
-              First
+          currentPage > 1 ? (
+            <a class='pagination-link' href={getPageUrl(currentPage - 1)}>
+              &#8592;&nbsp;Prev
             </a>
           ) : (
             <span aria-disabled='true' class='pagination-link is-disabled'>
-              First
+              &#8592;&nbsp;Prev
             </span>
           )
         }
@@ -89,7 +84,6 @@ const getPageUrl = (pageNumber: number) => {
                   {active: currentPage === pageNumber},
                 ]}
                 href={getPageUrl(pageNumber)}
-                tabindex={currentPage === pageNumber ? -1 : undefined}
               >
                 {pageNumber}
               </a>
@@ -99,13 +93,13 @@ const getPageUrl = (pageNumber: number) => {
       </ol>
       <div>
         {
-          last ? (
-            <a class='pagination-link' href={getPageUrl(lastPage)}>
-              Last
+          currentPage < lastPage ? (
+            <a class='pagination-link' href={getPageUrl(currentPage + 1)}>
+              Next&nbsp;&#8594;
             </a>
           ) : (
             <span aria-disabled='true' class='pagination-link is-disabled'>
-              Last
+              Next&nbsp;&#8594;
             </span>
           )
         }
