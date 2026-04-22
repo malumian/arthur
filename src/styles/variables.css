@@ -26,8 +26,7 @@
   --font-family-monospace:
     'Roboto Mono', Consolas, Menlo, 'Courier New', monospace;
 
-  --border-small: 0.1rem solid var(--color-text-base);
-  --border-medium: 0.2rem solid var(--color-text-base);
+  --border: 0.2rem solid var(--color-text-base);
 }
 
 @media (prefers-color-scheme: dark) {
