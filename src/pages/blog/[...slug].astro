@@ -3,7 +3,6 @@ import {type CollectionEntry, getCollection, render} from 'astro:content';
 
 import FormattedDate from '@/components/FormattedDate.astro';
 import Default from '@/layouts/Default.astro';
-import Tags from '@/components/Tags.astro';
 import {createExcerpt} from '@/utils/create-excerpt';
 
 export async function getStaticPaths() {
@@ -26,7 +25,7 @@ const currentPostIndex = posts.findIndex((p) => p.id === post.id);
 const previousPost =
   currentPostIndex < posts.length - 1 ? posts[currentPostIndex + 1] : null;
 const nextPost = currentPostIndex > 0 ? posts[currentPostIndex - 1] : null;
-const {title, date, tags} = post.data;
+const {title, date} = post.data;
 const minutesReadNumber = parseInt(minutesRead, 10);
 const excerpt = createExcerpt(post.body);
 ---
@@ -35,15 +34,12 @@ const excerpt = createExcerpt(post.body);
   <article>
     <header>
       <h1>{title}</h1>
-      <div class='post-meta'>
-        <ul class='details'>
-          <li class='detail'>
-            <FormattedDate date={date} />
-          </li>
-          <li class='detail'>{minutesReadNumber} minutes to read</li>
-        </ul>
-        <Tags tags={tags} withLinks />
-      </div>
+      <ul class='details'>
+        <li class='detail'>
+          <FormattedDate date={date} />
+        </li>
+        <li class='detail'>{minutesReadNumber} minutes to read</li>
+      </ul>
     </header>
     <Content />
     <div class='posts-nav'>
@@ -70,13 +66,6 @@ const excerpt = createExcerpt(post.body);
 </Default>
 
 <style>
-  .post-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin: 2rem 0;
-  }
-
   .details {
     display: flex;
     flex-wrap: wrap;
@@ -84,7 +73,7 @@ const excerpt = createExcerpt(post.body);
     color: var(--color-text-secondary);
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 2rem 0;
     gap: 1rem;
     row-gap: 0;
   }

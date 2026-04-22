@@ -1,7 +1,6 @@
 ---
 title: Hello Internet
 date: 2024-06-03
-tags: ['life']
 ---
 
 Hello Internet, this is the first post on my new website. Honestly, this is my first post in my whole life. I think it is necessary to introduce myself first. In short, my name is Arthur Malumian, and I am a programmer. On this [page](/) you can find more information about me.

@@ -1,7 +1,6 @@
 ---
 title: I Switched to LazyVim
 date: 2025-07-30
-tags: ['programming']
 ---
 
 In this post, I’ll explain why I switched from my own Neovim configuration to [LazyVim](https://www.lazyvim.org).

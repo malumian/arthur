@@ -10,20 +10,17 @@ const allPosts = (await getCollection('blog')).sort(
 );
 const paginatedPosts = allPosts.slice(0, BLOG_POSTS_PER_PAGE);
 const lastPage = Math.ceil(allPosts.length / BLOG_POSTS_PER_PAGE);
-const page =
-  lastPage > 1
-    ? ({
-        currentPage: 1,
-        total: allPosts.length,
-        lastPage,
-        url: {
-          first: undefined,
-          prev: undefined,
-          next: '/blog/page/2/',
-          last: `/blog/page/${lastPage}/`,
-        },
-      } as Page)
-    : undefined;
+const page = {
+  currentPage: 1,
+  total: allPosts.length,
+  lastPage,
+  url: {
+    first: undefined,
+    prev: undefined,
+    next: '/blog/page/2/',
+    last: `/blog/page/${lastPage}/`,
+  },
+} as Page;
 
 const {title, description} = PAGES_METADATA.blog;
 ---

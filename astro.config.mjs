@@ -14,8 +14,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      filter: (page) =>
-        !page.includes('/blog/tags/') && !page.includes('/blog/page/'),
+      filter: (page) => !page.includes('/blog/page/'),
     }),
   ],
   markdown: {

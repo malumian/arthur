@@ -1,7 +1,6 @@
 ---
 title: NGINX and Docker
 date: 2025-01-15
-tags: ['programming']
 ---
 
 In this article, I will share how to configure and use Docker and NGINX for both frontend and backend applications, providing a step-by-step approach for development and production environments.

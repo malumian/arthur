@@ -1,7 +1,6 @@
 ---
 title: Graduation
 date: 2024-06-14
-tags: ['life']
 ---
 
 I finally got my bachelor's degree in law. I can't even believe it. It seems that I had just entered the university, dreaming of a career as a civil lawyer, but the time passed so quickly and so much has changed in 4 years of study.

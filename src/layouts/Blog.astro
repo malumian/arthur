@@ -1,12 +1,9 @@
 ---
 import type {Page} from 'astro';
-import {getCollection, type CollectionEntry} from 'astro:content';
+import {type CollectionEntry} from 'astro:content';
 
 import Default from '@/layouts/Default.astro';
 import FormattedDate from '@/components/FormattedDate.astro';
-import Pagination from '@/components/Pagination.astro';
-import Select from '@/components/Select.astro';
-import Tags from '@/components/Tags.astro';
 import {createExcerpt} from '@/utils/create-excerpt';
 import {BLOG_POSTS_PER_PAGE} from '@/consts';
 
@@ -16,57 +13,38 @@ interface Props {
   title: string;
   description: string;
   posts: BlogPost[];
-  selectedTag?: string;
-  page?: Page<BlogPost>;
+  page: Page<BlogPost>;
 }
 
-const {title, description, posts, selectedTag, page} = Astro.props;
+const {
+  title,
+  description,
+  posts,
+  page: {
+    currentPage,
+    lastPage,
+    total,
+    url: {first, last},
+  },
+} = Astro.props;
 
-const allPosts = (await getCollection('blog')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
-const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())].sort(
-  (a, b) => a.localeCompare(b),
-);
-const defaultOption = {label: '—', value: '/blog/'};
-const tagOptions = [
-  defaultOption,
-  ...tags.map((tag) => ({
-    label: tag,
-    value: `/blog/tags/${tag}/`,
-  })),
-];
-const selectedOption =
-  tagOptions.find((tag) => tag.label === selectedTag) ?? defaultOption;
-const getPostsCountText = () => {
-  if (page) {
-    const from = (page.currentPage - 1) * BLOG_POSTS_PER_PAGE + 1;
-    const to = Math.min(page.currentPage * BLOG_POSTS_PER_PAGE, page.total);
-    const total = page.total;
-    const label = total === 1 ? 'post' : 'posts';
+const range = 2;
+const start = Math.max(1, currentPage - range);
+const end = Math.min(lastPage, currentPage + range);
+const pageNumbers = Array.from({length: end - start + 1}, (_, i) => start + i);
 
-    return `Showing ${from}–${to} of ${total} ${label}`;
-  } else {
-    const total = allPosts.length;
-    const shown = posts.length;
-    const label = total === 1 ? 'post' : 'posts';
-
-    return `Showing ${shown} of ${total} ${label}`;
-  }
+const getPageUrl = (pageNumber: number) => {
+  return pageNumber === 1 ? '/blog/' : `/blog/page/${pageNumber}/`;
 };
 ---
 
 <Default title={title} description={description}>
   <section class='blog'>
     <h1>{title}</h1>
-    <div class='posts-filters'>
-      <div class='posts-count'>{getPostsCountText()}</div>
-      <Select
-        id='tag-select'
-        label='Filter by tag'
-        options={tagOptions}
-        selectedOption={selectedOption}
-      />
+    <div class='posts-count'>
+      {
+        `Showing ${(currentPage - 1) * BLOG_POSTS_PER_PAGE + 1}–${Math.min(currentPage * BLOG_POSTS_PER_PAGE, total)} of ${total} posts`
+      }
     </div>
     <div class='posts-list'>
       {
@@ -78,7 +56,6 @@ const getPostsCountText = () => {
               <a class='post-link' href={`/blog/${post.id}/`}>
                 <h2 class='post-heading'>{post.data.title}</h2>
                 <FormattedDate class='post-date' date={post.data.date} />
-                <Tags tags={post.data.tags} />
                 <p class='post-excerpt'>{excerpt}</p>
               </a>
             </article>
@@ -86,7 +63,54 @@ const getPostsCountText = () => {
         })
       }
     </div>
-    {page && <Pagination page={page} />}
+    <nav aria-label='Pagination' class='pagination'>
+      <div>
+        {
+          first ? (
+            <a class='pagination-link' href={getPageUrl(1)}>
+              First
+            </a>
+          ) : (
+            <span aria-disabled='true' class='pagination-link is-disabled'>
+              First
+            </span>
+          )
+        }
+      </div>
+      <ol class='pagination-pages'>
+        {
+          pageNumbers.map((pageNumber) => (
+            <li>
+              <a
+                aria-current={currentPage === pageNumber ? 'page' : undefined}
+                class:list={[
+                  'pagination-link',
+                  'pagination-page',
+                  {active: currentPage === pageNumber},
+                ]}
+                href={getPageUrl(pageNumber)}
+                tabindex={currentPage === pageNumber ? -1 : undefined}
+              >
+                {pageNumber}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+      <div>
+        {
+          last ? (
+            <a class='pagination-link' href={getPageUrl(lastPage)}>
+              Last
+            </a>
+          ) : (
+            <span aria-disabled='true' class='pagination-link is-disabled'>
+              Last
+            </span>
+          )
+        }
+      </div>
+    </nav>
   </section>
 </Default>
 
@@ -97,16 +121,8 @@ const getPostsCountText = () => {
     flex-direction: column;
   }
 
-  .posts-filters {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-
   .posts-count {
-    margin: 0;
+    margin: 2rem 0;
     line-height: 1;
     font-family: var(--font-family-sans-serif-condensed);
     font-size: var(--font-size-medium);
@@ -117,7 +133,6 @@ const getPostsCountText = () => {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    margin: 2rem 0;
     text-align: center;
   }
 
@@ -157,5 +172,62 @@ const getPostsCountText = () => {
     margin: 0;
     hyphens: none;
     text-align: left;
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin: 2rem 0;
+    font-family: var(--font-family-sans-serif-condensed);
+    font-size: var(--font-size-medium);
+    line-height: 1;
+    text-align: center;
+  }
+
+  .pagination-pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pagination-link {
+    display: block;
+    border: var(--border-small);
+    color: var(--color-text-base);
+    line-height: 1;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+  }
+  .pagination-link:hover {
+    border-color: var(--color-primary-hover);
+  }
+  .pagination-link:active {
+    border-color: var(--color-primary-active);
+  }
+  .pagination-link:focus-visible {
+    border-color: var(--color-primary);
+    outline: none;
+  }
+  .pagination-link.active {
+    border-color: var(--color-primary);
+  }
+  .pagination-link.active:hover {
+    border-color: var(--color-primary-hover);
+  }
+  .pagination-link.active:active {
+    border-color: var(--color-primary-active);
+  }
+  .pagination-link.is-disabled {
+    color: var(--color-text-secondary);
+    cursor: not-allowed;
+    border-color: var(--color-text-secondary);
   }
 </style>
