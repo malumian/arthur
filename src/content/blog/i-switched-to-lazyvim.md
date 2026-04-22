@@ -1,11 +1,6 @@
 ---
 title: I Switched to LazyVim
 date: 2025-07-30
-description: This post is about why I transitioned from a custom Neovim setup to LazyVim, highlighting the benefits of simplicity, sensible defaults, and hassle-free configuration that let me focus more on programming and less on tweaking my editor.
-imageData:
-  image: ../../assets/blog/i-switched-to-lazyvim/lazyvim.png
-  alt: LazyVim start screen using the TokyoNight theme, showing a minimal dotfiles setup with the file explorer and dashboard options.
-  figcaption: LazyVim
 tags: ['programming']
 ---
 

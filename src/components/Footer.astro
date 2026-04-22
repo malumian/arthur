@@ -16,7 +16,7 @@ import {SOCIALS} from '@/consts';
               title={link.name}
               aria-label={link.name}
             >
-              <Icon iconName={link.icon} width='3rem' height='3rem' block />
+              <Icon class='link-icon' iconName={link.icon} />
             </a>
           </li>
         ))
@@ -63,6 +63,10 @@ import {SOCIALS} from '@/consts';
   .link {
     width: 3rem;
     height: 3rem;
+    display: block;
+  }
+
+  .link-icon {
     display: block;
   }
 

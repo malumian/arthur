@@ -1,9 +1,8 @@
 ---
 import Blog from '@/layouts/Blog.astro';
 import {PAGES_METADATA} from '@/consts';
-import BlogImage from '@/assets/blog/blog-page.png';
 
 const {title, description} = PAGES_METADATA.blog;
 ---
 
-<Blog title={title} description={description} image={BlogImage} />
+<Blog title={title} description={description} />

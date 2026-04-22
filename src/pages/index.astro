@@ -2,17 +2,16 @@
 import {Image} from 'astro:assets';
 
 import Default from '@/layouts/Default.astro';
-import HomeImageWide from '@/assets/arthur-malumian-wide.webp';
-import HomeImage from '@/assets/arthur-malumian.webp';
+import ArthurMalumianImage from '@/assets/arthur-malumian.jpg';
 import {PAGES_METADATA} from '@/consts';
 
 const {title, description} = PAGES_METADATA.home;
 ---
 
-<Default title={title} description={description} image={HomeImageWide}>
+<Default title={title} description={description}>
   <section>
     <h1>Arthur Malumian</h1>
-    <Image class='photo' src={HomeImage} alt='Arthur Malumian' />
+    <Image class='photo' src={ArthurMalumianImage} alt='Arthur Malumian' />
     <p>
       I am Arthur Malumian (рус. Арту́р Малумя́н), a programmer based in
       Novosibirsk, Russia.
@@ -70,6 +69,6 @@ const {title, description} = PAGES_METADATA.home;
     margin: 2rem 0 2rem 2rem;
     float: right;
     width: 33%;
-    aspect-ratio: 9 / 16;
+    aspect-ratio: 1 / 1;
   }
 </style>

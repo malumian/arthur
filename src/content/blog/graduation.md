@@ -1,11 +1,6 @@
 ---
 title: Graduation
 date: 2024-06-14
-description: This post is a story about &quot;life is life&quot;. People make mistakes, and there is nothing wrong with that. But admitting a mistake is a different matter. In this post, Arthur Malumian tells his story about making a mistake.
-imageData:
-  image: ../../assets/blog/graduation/justice-for-all.webp
-  alt: Al Pacino as Arthur Kirkland in And Justice for All (1979) is being forcefully restrained by a police officer in a courtroom, his face showing intense emotion. The background is filled with blurred spectators, capturing the chaotic and dramatic atmosphere of the scene.
-  figcaption: And Justice for All (1979)
 tags: ['life']
 ---
 

@@ -1,12 +1,11 @@
 ---
 import Default from '@/layouts/Default.astro';
 import {PAGES_METADATA} from '@/consts';
-import NotFoundImage from '@/assets/404/404-page.png';
 
 const {title, description} = PAGES_METADATA['404'];
 ---
 
-<Default title={title} description={description} image={NotFoundImage}>
+<Default title={title} description={description}>
   <section>
     <h1>{title}</h1>
     <p>Page not found! :(</p>

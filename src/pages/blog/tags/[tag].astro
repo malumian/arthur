@@ -3,7 +3,6 @@ import {getCollection} from 'astro:content';
 
 import Blog from '@/layouts/Blog.astro';
 import {PAGES_METADATA} from '@/consts';
-import BlogImage from '@/assets/blog/blog-page.png';
 
 export async function getStaticPaths() {
   const allPosts = (await getCollection('blog')).sort(
@@ -31,7 +30,6 @@ const {title, description} = PAGES_METADATA.blog;
 <Blog
   title={`${title} — ${tag}`}
   description={description}
-  image={BlogImage}
   filteredPosts={posts}
   selectedTag={tag}
 />

@@ -1,11 +1,6 @@
 ---
 title: NGINX and Docker
 date: 2025-01-15
-description: This article provides a comprehensive guide on how to configure Docker and NGINX for both frontend and backend applications in development and production environments.
-imageData:
-  image: ../../assets/blog/nginx-and-docker/silicon-valley.webp
-  alt: Kumail Nanjiani as Dinesh Chugtai in Silicon Valley (2014–2019) is working with six monitors arranged in two rows.
-  figcaption: Silicon Valley (2014–2019)
 tags: ['programming']
 ---
 

@@ -2,7 +2,7 @@
 import type {ImageMetadata} from 'astro';
 
 import {SITE_TITLE} from '@/consts';
-import FallbackImage from '@/assets/wide-logo.png';
+import FallbackImage from '@/assets/arthur-malumian.jpg';
 
 import '@/styles/variables.css';
 import '@/styles/fonts.css';
@@ -171,7 +171,7 @@ const formattedTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 <meta property='og:locale' content='en_US' />
 <meta property='og:site_name' content={Astro.url.host} />
 
-<meta property='twitter:card' content='summary_large_image' />
+<meta property='twitter:card' content='summary' />
 <meta property='twitter:url' content={Astro.url} />
 <meta property='twitter:title' content={formattedTitle} />
 <meta property='twitter:description' content={description} />

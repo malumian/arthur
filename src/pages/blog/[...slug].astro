@@ -1,9 +1,10 @@
 ---
 import {type CollectionEntry, getCollection, render} from 'astro:content';
-import {Image} from 'astro:assets';
 
 import FormattedDate from '@/components/FormattedDate.astro';
 import Default from '@/layouts/Default.astro';
+import Tags from '@/components/Tags.astro';
+import {createExcerpt} from '@/utils/create-excerpt';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -25,18 +26,12 @@ const currentPostIndex = posts.findIndex((p) => p.id === post.id);
 const previousPost =
   currentPostIndex < posts.length - 1 ? posts[currentPostIndex + 1] : null;
 const nextPost = currentPostIndex > 0 ? posts[currentPostIndex - 1] : null;
-const {
-  title,
-  description,
-  date,
-  imageData: {image, alt, figcaption},
-  tags,
-} = post.data;
+const {title, date, tags} = post.data;
 const minutesReadNumber = parseInt(minutesRead, 10);
-const sortedTags = tags.sort((a, b) => a.localeCompare(b));
+const excerpt = createExcerpt(post.body);
 ---
 
-<Default title={title} description={description} date={date} image={image}>
+<Default title={title} description={excerpt} date={date}>
   <article>
     <header>
       <h1>{title}</h1>
@@ -47,22 +42,8 @@ const sortedTags = tags.sort((a, b) => a.localeCompare(b));
           </li>
           <li class='detail'>{minutesReadNumber} minutes to read</li>
         </ul>
-        <ul class='tags'>
-          {
-            sortedTags.map((tag) => (
-              <li class='tag'>
-                <a href={`/blog/tags/${tag}/`}>{tag}</a>
-              </li>
-            ))
-          }
-        </ul>
+        <Tags tags={tags} withLinks />
       </div>
-      <figure class='figure'>
-        <Image class='figure-image' src={image} alt={`Post cover: ${alt}`} />
-        <figcaption class='figcaption'>
-          {figcaption}
-        </figcaption>
-      </figure>
     </header>
     <Content />
     <div class='posts-nav'>
@@ -78,7 +59,7 @@ const sortedTags = tags.sort((a, b) => a.localeCompare(b));
       {
         nextPost && (
           <div class='posts-nav-item posts-nav-item-next'>
-            <a class='posts-nav-link' href={`/blog/${nextPost.id}/`}>
+            <a href={`/blog/${nextPost.id}/`}>
               {nextPost.data.title}&nbsp;&#8594;
             </a>
           </div>
@@ -111,7 +92,6 @@ const sortedTags = tags.sort((a, b) => a.localeCompare(b));
   .detail {
     position: relative;
   }
-
   .detail::after {
     content: '·';
     position: absolute;
@@ -119,62 +99,14 @@ const sortedTags = tags.sort((a, b) => a.localeCompare(b));
     top: 0;
     transform: translate(50%, 0);
   }
-
   .detail:last-child::after {
     content: '';
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    font-family: var(--font-family-sans-serif-condensed);
-    font-size: var(--font-size-medium);
-    font-weight: bold;
-    color: var(--color-background-base);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    gap: 0.4rem;
-    row-gap: 0;
-  }
-
-  .tag {
-    background-color: var(--color-primary);
-    display: block;
-  }
-
-  .tag a {
-    text-decoration: none;
-    display: block;
-    padding: 0.1rem 0.4rem;
-    color: #fff;
-  }
-
-  .figure {
-    position: relative;
-  }
-
-  .figure-image {
-    aspect-ratio: 16 / 9;
-  }
-
-  .figcaption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: 0.1rem 0.4rem;
-    margin: 1rem;
-    font-family: var(--font-family-sans-serif-condensed);
-    font-size: var(--font-size-medium);
-    color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .posts-nav {
     margin-bottom: 2rem;
     font-family: var(--font-family-sans-serif-condensed);
   }
-
   .posts-nav::after {
     content: '';
     display: table;
@@ -184,17 +116,11 @@ const sortedTags = tags.sort((a, b) => a.localeCompare(b));
   .posts-nav-item {
     width: 50%;
   }
-
   .posts-nav-item-prev {
     float: left;
   }
-
   .posts-nav-item-next {
     float: right;
     text-align: right;
-  }
-
-  .posts-nav-link {
-    text-decoration: none;
   }
 </style>

@@ -79,7 +79,7 @@ b {
 }
 
 a {
-  color: inherit;
+  color: var(--color-primary);
   text-decoration-style: solid;
   text-decoration-line: underline;
   text-decoration-skip-ink: auto;
@@ -88,17 +88,22 @@ a {
   text-underline-position: from-font;
 }
 a:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-hover);
 }
 a:active {
   color: var(--color-primary-active);
 }
+
+a svg {
+  fill: var(--color-text-base);
+}
 a svg:hover {
-  fill: var(--color-primary);
+  fill: var(--color-primary-hover);
 }
 a svg:active {
   fill: var(--color-primary-active);
 }
+
 sup a {
   text-decoration: none;
 }
@@ -119,6 +124,7 @@ textarea {
   width: 100%;
   font-size: var(--font-size-default);
 }
+
 input {
   font-size: 16px;
 }
