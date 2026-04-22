@@ -1,8 +1,36 @@
 ---
+import type {Page} from 'astro';
+import {getCollection} from 'astro:content';
+
 import Blog from '@/layouts/Blog.astro';
-import {PAGES_METADATA} from '@/consts';
+import {BLOG_POSTS_PER_PAGE, PAGES_METADATA} from '@/consts';
+
+const allPosts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const paginatedPosts = allPosts.slice(0, BLOG_POSTS_PER_PAGE);
+const lastPage = Math.ceil(allPosts.length / BLOG_POSTS_PER_PAGE);
+const page =
+  lastPage > 1
+    ? ({
+        currentPage: 1,
+        total: allPosts.length,
+        lastPage,
+        url: {
+          first: undefined,
+          prev: undefined,
+          next: '/blog/page/2/',
+          last: `/blog/page/${lastPage}/`,
+        },
+      } as Page)
+    : undefined;
 
 const {title, description} = PAGES_METADATA.blog;
 ---
 
-<Blog title={title} description={description} />
+<Blog
+  title={title}
+  description={description}
+  posts={paginatedPosts}
+  page={page}
+/>

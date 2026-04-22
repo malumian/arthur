@@ -1,21 +1,26 @@
 ---
+import type {Page} from 'astro';
 import {getCollection, type CollectionEntry} from 'astro:content';
 
 import Default from '@/layouts/Default.astro';
 import FormattedDate from '@/components/FormattedDate.astro';
+import Pagination from '@/components/Pagination.astro';
 import Select from '@/components/Select.astro';
 import Tags from '@/components/Tags.astro';
 import {createExcerpt} from '@/utils/create-excerpt';
+import {BLOG_POSTS_PER_PAGE} from '@/consts';
 
 type BlogPost = CollectionEntry<'blog'>;
 
 interface Props {
   title: string;
   description: string;
-  filteredPosts?: BlogPost[];
+  posts: BlogPost[];
   selectedTag?: string;
+  page?: Page<BlogPost>;
 }
-const {title, description, filteredPosts, selectedTag} = Astro.props;
+
+const {title, description, posts, selectedTag, page} = Astro.props;
 
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -23,7 +28,6 @@ const allPosts = (await getCollection('blog')).sort(
 const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())].sort(
   (a, b) => a.localeCompare(b),
 );
-const postsToRender = filteredPosts ?? allPosts;
 const defaultOption = {label: '—', value: '/blog/'};
 const tagOptions = [
   defaultOption,
@@ -34,16 +38,29 @@ const tagOptions = [
 ];
 const selectedOption =
   tagOptions.find((tag) => tag.label === selectedTag) ?? defaultOption;
+const getPostsCountText = () => {
+  if (page) {
+    const from = (page.currentPage - 1) * BLOG_POSTS_PER_PAGE + 1;
+    const to = Math.min(page.currentPage * BLOG_POSTS_PER_PAGE, page.total);
+    const total = page.total;
+    const label = total === 1 ? 'post' : 'posts';
+
+    return `Showing ${from}–${to} of ${total} ${label}`;
+  } else {
+    const total = allPosts.length;
+    const shown = posts.length;
+    const label = total === 1 ? 'post' : 'posts';
+
+    return `Showing ${shown} of ${total} ${label}`;
+  }
+};
 ---
 
 <Default title={title} description={description}>
   <section class='blog'>
     <h1>{title}</h1>
     <div class='posts-filters'>
-      <div class='posts-count'>
-        Showing {postsToRender.length} of {allPosts.length}
-        {allPosts.length === 1 ? 'post' : 'posts'}
-      </div>
+      <div class='posts-count'>{getPostsCountText()}</div>
       <Select
         id='tag-select'
         label='Filter by tag'
@@ -53,7 +70,7 @@ const selectedOption =
     </div>
     <div class='posts-list'>
       {
-        postsToRender.map((post: BlogPost) => {
+        posts.map((post: BlogPost) => {
           const excerpt = createExcerpt(post.body);
 
           return (
@@ -69,10 +86,17 @@ const selectedOption =
         })
       }
     </div>
+    {page && <Pagination page={page} />}
   </section>
 </Default>
 
 <style>
+  .blog {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
   .posts-filters {
     display: flex;
     justify-content: space-between;
@@ -89,10 +113,12 @@ const selectedOption =
   }
 
   .posts-list {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 2rem;
     margin: 2rem 0;
+    text-align: center;
   }
 
   .post-link {
@@ -130,5 +156,6 @@ const selectedOption =
     font-family: var(--font-family-sans-serif);
     margin: 0;
     hyphens: none;
+    text-align: left;
   }
 </style>

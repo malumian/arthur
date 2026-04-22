@@ -79,3 +79,5 @@ export const SOCIALS = [
     icon: 'rss',
   },
 ];
+
+export const BLOG_POSTS_PER_PAGE = 5;

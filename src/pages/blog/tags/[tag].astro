@@ -11,6 +11,7 @@ export async function getStaticPaths() {
   const uniqueTags = [
     ...new Set(allPosts.map((post) => post.data.tags).flat()),
   ];
+
   return uniqueTags.map((tag) => {
     const filteredPosts = allPosts.filter((post) =>
       post.data.tags.includes(tag),
@@ -28,8 +29,8 @@ const {title, description} = PAGES_METADATA.blog;
 ---
 
 <Blog
-  title={`${title} — ${tag}`}
+  title={`${title} — Tag ${tag}`}
   description={description}
-  filteredPosts={posts}
+  posts={posts}
   selectedTag={tag}
 />
