@@ -11,11 +11,6 @@ export const PAGES_METADATA = {
     description:
       "This is the blog of Arthur Malumian, a software engineer who posts about web development and more. He shares about the books he's reading, the movies he's watching, and the trips he's taking.",
   },
-  tags: {
-    title: 'Tags',
-    description:
-      "This page provides an overview of Arthur Malumian's tags used in the blog",
-  },
   setup: {
     title: 'Setup',
     description:
