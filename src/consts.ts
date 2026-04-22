@@ -21,10 +21,6 @@ export const PAGES_METADATA = {
     description:
       "This page provides an overview of Arthur Malumian's personal setup.",
   },
-  history: {
-    title: 'Website History',
-    description: 'History of Arthur Malumian website.',
-  },
   404: {
     title: '404',
     description: 'Page not found.',
