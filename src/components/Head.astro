@@ -156,14 +156,7 @@ const formattedTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 <meta name='title' content={formattedTitle} />
 <meta name='description' content={description} />
 
-<meta
-  property='og:type'
-  content={Astro.url.pathname.startsWith('/blog/') &&
-  !Astro.url.pathname.startsWith('/blog/tags/') &&
-  Astro.url.pathname !== '/blog/'
-    ? 'article'
-    : 'website'}
-/>
+<meta property='og:type' content={date ? 'article' : 'website'} />
 <meta property='og:url' content={Astro.url} />
 <meta property='og:title' content={formattedTitle} />
 <meta property='og:description' content={description} />
