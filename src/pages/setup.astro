@@ -2,18 +2,18 @@
 import {Image} from 'astro:assets';
 
 import Default from '@/layouts/Default.astro';
-import SetupImage from '@/assets/setup/desk.jpeg';
+import DeskImage from '@/assets/setup/desk.jpeg';
 import {PAGES_METADATA} from '@/consts';
 
 const {title, description} = PAGES_METADATA.setup;
 ---
 
-<Default title={title} description={description} image={SetupImage}>
+<Default title={title} description={description}>
   <section>
     <h1>{title}</h1>
     <p>This page provides an overview of my setup.</p>
     <p>
-      <Image src={SetupImage} alt='Deskp' />
+      <Image src={DeskImage} alt='Desk' />
     </p>
     <h2>Table of Contents</h2>
     <ul>
