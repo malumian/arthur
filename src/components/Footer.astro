@@ -15,6 +15,8 @@ import {SOCIALS} from '@/consts';
               href={link.link}
               title={link.name}
               aria-label={link.name}
+              target='_blank'
+              rel='noopener noreferrer'
             >
               <Icon class='link-icon' iconName={link.icon} />
             </a>
@@ -24,8 +26,10 @@ import {SOCIALS} from '@/consts';
     </ul>
     <p class='copyright'>
       Copyright &copy; 2024–2026
-      <a href='https://github.com/malumian/arthur/blob/main/LICENSE'
-        >Arthur Malumian</a
+      <a
+        href='https://github.com/malumian/arthur/blob/main/LICENSE'
+        target='_blank'
+        rel='noopener noreferrer'>Arthur Malumian</a
       >
     </p>
   </div>
