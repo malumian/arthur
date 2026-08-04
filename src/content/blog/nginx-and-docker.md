@@ -31,7 +31,6 @@ In this article, I will share how to configure and use Docker and NGINX for both
     - [default](#default)
     - [example.com.conf](#examplecomconf)
 - [Next Steps](#next-steps)
-- [Links](#links)
 
 ## Docker
 
@@ -579,9 +578,3 @@ ln -s /etc/nginx/sites-available/example.com.conf /etc/nginx/sites-enabled/
 ## Next Steps
 
 After setting up Docker and NGINX, you may want to add HTTPS support. One popular and free solution is Certbot by Let’s Encrypt, which automates the process of obtaining and renewing SSL/TLS certificates. Ensure that your domain is correctly pointed to your server before running Certbot.
-
-## Links
-
-- [Docker](https://www.docker.com/)
-- [NGINX](https://nginx.org/en/)
-- [Certbot](https://certbot.eff.org/)
