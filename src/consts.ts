@@ -11,11 +11,6 @@ export const PAGES_METADATA = {
     description:
       "This is the blog of Arthur Malumian, a software engineer who posts about web development and more. He shares about the books he's reading, the movies he's watching, and the trips he's taking.",
   },
-  setup: {
-    title: 'Setup',
-    description:
-      "This page provides an overview of Arthur Malumian's personal setup.",
-  },
   404: {
     title: '404',
     description: 'Page not found.',
@@ -30,10 +25,6 @@ export const ROUTES = [
   {
     name: 'Blog',
     link: '/blog/',
-  },
-  {
-    name: 'Setup',
-    link: '/setup/',
   },
 ];
 
